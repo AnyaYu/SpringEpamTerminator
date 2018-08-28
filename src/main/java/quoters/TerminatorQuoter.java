@@ -8,6 +8,20 @@ public class TerminatorQuoter implements Quoter {
 
 	private String message;
 
+	// <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+	// should be added to context.xml to make init method work
+	public void init() {
+		System.out.println("Phase 2");
+
+		// Print repeat in init method as it can't be print in constructor
+		// (repeat is not yet initialized when constructor is called)
+		System.out.println(repeat);
+	}
+
+	public TerminatorQuoter() {
+		System.out.println("Phase 1");
+	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
