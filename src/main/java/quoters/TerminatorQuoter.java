@@ -1,5 +1,6 @@
 package quoters;
 
+@Profiling
 public class TerminatorQuoter implements Quoter {
 
 	//InjectRandomInt is used to avoid different creations of random number
