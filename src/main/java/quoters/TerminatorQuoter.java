@@ -1,5 +1,7 @@
 package quoters;
 
+import javax.annotation.PostConstruct;
+
 @Profiling
 public class TerminatorQuoter implements Quoter {
 
@@ -11,6 +13,7 @@ public class TerminatorQuoter implements Quoter {
 
 	// <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 	// should be added to context.xml to make init method work
+	@PostConstruct
 	public void init() {
 		System.out.println("Phase 2");
 
@@ -27,8 +30,9 @@ public class TerminatorQuoter implements Quoter {
 		this.message = message;
 	}
 
+	@PostProxy
 	public void sayQuote() {
-
+		System.out.println("Phase 3");
 		for (int i = 0; i < repeat; i++) {
 			System.out.println("message = " + message);
 		}
