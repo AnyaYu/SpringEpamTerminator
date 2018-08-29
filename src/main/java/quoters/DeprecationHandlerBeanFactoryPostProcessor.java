@@ -7,21 +7,19 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 public class DeprecationHandlerBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-        String[] beanDefinitionNames = configurableListableBeanFactory.getBeanDefinitionNames();
-        for(String name:beanDefinitionNames){
-            BeanDefinition beanDefinition = configurableListableBeanFactory.getBeanDefinition(name);
-            String beanClassName = beanDefinition.getBeanClassName();
+        final String[] beanDefinitionNames = configurableListableBeanFactory.getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            final BeanDefinition beanDefinition = configurableListableBeanFactory.getBeanDefinition(beanDefinitionName);
+            final String beanClassName = beanDefinition.getBeanClassName();
             try {
-                Class<?> beanClass = Class.forName(beanClassName);
-                DeprecatedClass annotation = beanClass.getAnnotation(DeprecatedClass.class);
-                if(annotation!=null){
+                final Class<?> beanClass = Class.forName(beanClassName);
+                final DeprecatedClass annotation = beanClass.getAnnotation(DeprecatedClass.class);
+                if (annotation != null) {
                     beanDefinition.setBeanClassName(annotation.newImpl().getName());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 }
